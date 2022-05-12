@@ -28,3 +28,18 @@ func GetPersonalidade(w http.ResponseWriter, r *http.Request) {
 	DAO.DB.First(&p, id)
 	json.NewEncoder(w).Encode(p)
 }
+
+func AddPersonalidade(w http.ResponseWriter, r *http.Request) {
+	var personalidade models.Personalidade
+	json.NewDecoder(r.Body).Decode(&personalidade)
+	DAO.DB.Create(&personalidade)
+	json.NewEncoder(w).Encode(personalidade)
+}
+
+func DeletePersonalidade(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["id"]
+	var p models.Personalidade
+	DAO.DB.Delete(&p, id)
+	json.NewEncoder(w).Encode(p)
+}
