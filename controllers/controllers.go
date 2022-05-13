@@ -43,3 +43,13 @@ func DeletePersonalidade(w http.ResponseWriter, r *http.Request) {
 	DAO.DB.Delete(&p, id)
 	json.NewEncoder(w).Encode(p)
 }
+
+func EditPersonalidade(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["id"]
+	var p models.Personalidade
+	DAO.DB.First(&p, id)
+	json.NewDecoder(r.Body).Decode(&p)
+	DAO.DB.Save(&p)
+	json.NewEncoder(w).Encode(p)
+}
